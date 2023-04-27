@@ -11,4 +11,25 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  modules: ["nuxt-sanctum-auth"],
+  nuxtSanctumAuth: {
+    token: false, // set true to use jwt-token auth instead of cookie. default is false
+    baseUrl: "http://localhost:8000",
+    endpoints: {
+      csrf: "/sanctum/csrf-cookie",
+      login: "/login",
+      logout: "/logout",
+      user: "/user",
+    },
+    csrf: {
+      headerKey: "X-XSRF-TOKEN",
+      cookieKey: "XSRF-TOKEN",
+      tokenCookieKey: "nuxt-sanctum-auth-token",
+    },
+    redirects: {
+      home: "/account",
+      login: "/auth/login",
+      logout: "/",
+    },
+  },
 });
