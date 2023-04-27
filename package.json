@@ -16,6 +16,7 @@
     "tailwindcss": "^3.3.2"
   },
   "dependencies": {
+    "nuxt-sanctum-auth": "^0.4.7",
     "tw-elements": "^1.0.0-beta2"
   }
 }
