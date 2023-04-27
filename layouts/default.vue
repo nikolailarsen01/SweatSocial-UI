@@ -4,6 +4,5 @@
       <DefaultHeader />
     </ClientOnly>
     <slot />
-    <DefaultFooter />
   </div>
 </template>
