@@ -1,8 +1,12 @@
 <template>
   <div>
-    <ClientOnly>
-      <DefaultHeader />
-    </ClientOnly>
-    <slot />
+    <div>
+      <ClientOnly>
+        <DefaultHeader />
+      </ClientOnly>
+    </div>
+    <div class="pt-[65px]">
+      <slot />
+    </div>
   </div>
 </template>
