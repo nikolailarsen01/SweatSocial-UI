@@ -3,6 +3,16 @@ import Login from "~/components/auth/login.vue";
 import Register from "~/components/auth/register.vue";
 
 const login = ref<boolean>(true);
+
+const { $sanctumAuth } = useNuxtApp();
+const router = useRouter();
+const errors = ref([]);
+
+useHead(() => {
+  return {
+    title: login.value ? "Login" : "Registrer",
+  };
+});
 </script>
 
 <template>
