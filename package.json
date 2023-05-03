@@ -19,7 +19,9 @@
     "@headlessui/vue": "^1.7.13",
     "@heroicons/vue": "^2.0.17",
     "axios": "^1.4.0",
+    "nuxt-icon": "^0.4.0",
     "nuxt-sanctum-auth": "^0.4.7",
-    "tw-elements": "^1.0.0-beta2"
+    "tw-elements": "^1.0.0-beta2",
+    "vue-upload-drop-images": "^1.0.7"
   }
 }

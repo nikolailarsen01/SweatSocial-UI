@@ -11,12 +11,15 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  modules: [
+    'nuxt-sanctum-auth',
+    'nuxt-icon'
+  ],
   runtimeConfig: {
     public: {
       apiURL: "https://d806-185-19-132-71.ngrok-free.app/api/",
     },
   },
-  modules: ["nuxt-sanctum-auth"],
   nuxtSanctumAuth: {
     token: false, // set true to use jwt-token auth instead of cookie. default is false
     baseUrl: "http://localhost:8000",
