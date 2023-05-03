@@ -1,10 +1,45 @@
 <script setup lang="ts">
+const config = useRuntimeConfig();
 const emit = defineEmits<{ (event: "login", login: boolean): void }>();
+const router = useRouter();
+const form = ref({
+  username: "",
+  password: "",
+});
+const errorList = ref<string[]>([]);
+
+import { Response } from "~/interfaces/response";
+async function login() {
+  await $fetch<Response<void>>(config.public.apiURL + "auth/login", {
+    method: "post",
+    body: {
+      username: form.value.username,
+      password: form.value.password,
+    },
+  })
+    .then((res) => {
+      const apiToken = useCookie("API-Token", {
+        sameSite: true,
+      });
+      apiToken.value = res.token;
+      router.push("/profile");
+      return res;
+    })
+    .catch((error) => {
+      let output: Response<void> = error.data;
+      Object.entries(output.errors!).forEach(([key, errors]) => {
+        errors.forEach((x) => {
+          errorList.value.push(x);
+          console.log(x);
+        });
+      });
+    });
+}
 </script>
 
 <template>
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form class="space-y-6" action="#" method="POST">
+    <form class="space-y-6" @submit.prevent="login()">
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="name"
           >Brugernavn</label
@@ -15,6 +50,8 @@ const emit = defineEmits<{ (event: "login", login: boolean): void }>();
           id="name"
           name="name"
           placeholder="Swole Joe"
+          v-model="form.username"
+          required
         />
       </div>
       <div class="mb-4">
@@ -39,10 +76,15 @@ const emit = defineEmits<{ (event: "login", login: boolean): void }>();
           id="password"
           name="password"
           placeholder="********"
+          v-model="form.password"
+          required
         />
       </div>
 
       <div>
+        <p v-for="error in errorList" class="mb-1 text-xs text-red-500">
+          {{ error }}
+        </p>
         <button
           type="submit"
           class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

@@ -1,5 +1,7 @@
 export interface Response<T> {
   success: boolean;
-  data: T;
-  errors: { [key: string]: string[] };
+  data?: T;
+  message: string;
+  errors?: { [key: string]: string[] };
+  token?: string;
 }

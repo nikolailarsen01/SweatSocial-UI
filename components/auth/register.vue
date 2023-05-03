@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
+const router = useRouter();
 const emit = defineEmits<{ (event: "login", login: boolean): void }>();
-const request = ref(true);
 const form = ref({
   username: "",
   firstName: "",
@@ -12,33 +12,51 @@ const form = ref({
   confirmPassword: "",
 });
 
+const errorList = ref<string[]>([]);
+
 import { Response } from "~/interfaces/response";
 import { Register } from "~/interfaces/register";
 async function register() {
+  errorList.value = [];
+  if (form.value.password != form.value.confirmPassword) {
+    errorList.value.push("Kodeorderne er ikke ens");
+    return;
+  }
   let birthdate = form.value.rawBirthDate;
-  const response = await $fetch<Response<Register>>(
-    config.public.apiURL + "auth/register",
-    {
-      method: "post",
-      body: {
-        username: form.value.username,
-        first_name: form.value.firstName,
-        last_name: form.value.lastName,
-        email: form.value.email,
-        birthdate: birthdate,
-        password: form.value.password,
-      },
-    }
-  );
-  console.log(response.success);
-  request.value = response.success.valueOf();
+  await $fetch<Response<Register>>(config.public.apiURL + "auth/register", {
+    method: "post",
+    body: {
+      username: form.value.username,
+      first_name: form.value.firstName,
+      last_name: form.value.lastName,
+      email: form.value.email,
+      birthdate: birthdate,
+      password: form.value.password,
+    },
+  })
+    .then((res) => {
+      const apiToken = useCookie("API-Token", {
+        sameSite: true,
+      });
+      apiToken.value = res.token;
+      router.push("/profile");
+    })
+    .catch((error) => {
+      let output: Response<Register> = error.data;
+      Object.entries(output.errors!).forEach(([key, errors]) => {
+        errors.forEach((x) => {
+          errorList.value.push(x);
+          console.log(x);
+        });
+      });
+    });
 }
 </script>
 
 <template>
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-xl">
-    <div>{{ request ? "bla" : "FAILED" }}</div>
-    <form class="space-y-6">
+    <div></div>
+    <form class="space-y-6" @submit.prevent="register()">
       <div>
         <div class="mb-4">
           <label
@@ -51,8 +69,9 @@ async function register() {
             type="text"
             id="username"
             name="username"
-            :model="form.username"
             placeholder="Swole Joe"
+            v-model="form.username"
+            required
           />
         </div>
       </div>
@@ -70,7 +89,8 @@ async function register() {
               id="firstname"
               name="firstname"
               placeholder="John"
-              :model="form.firstName"
+              v-model="form.firstName"
+              required
             />
           </div>
         </div>
@@ -87,7 +107,8 @@ async function register() {
               id="lastname"
               name="lastname"
               placeholder="Doe"
-              :model="form.lastName"
+              v-model="form.lastName"
+              required
             />
           </div>
         </div>
@@ -103,7 +124,8 @@ async function register() {
           type="date"
           id="birthdate"
           name="birthdate"
-          :model="form.rawBirthDate"
+          v-model="form.rawBirthDate"
+          required
         />
       </div>
       <div>
@@ -116,7 +138,8 @@ async function register() {
           id="email"
           name="email"
           placeholder="john@example.com"
-          :model="form.email"
+          v-model="form.email"
+          required
         />
       </div>
       <div class="columns-2 mb-1">
@@ -132,7 +155,8 @@ async function register() {
             id="password"
             name="password"
             placeholder="********"
-            :model="form.password"
+            v-model="form.password"
+            required
           />
         </div>
         <div>
@@ -147,15 +171,19 @@ async function register() {
             id="confirm-password"
             name="confirm-password"
             placeholder="********"
-            :model="form.confirmPassword"
+            v-model="form.confirmPassword"
+            required
           />
         </div>
       </div>
 
       <div>
+        <p v-for="error in errorList" class="mb-1 text-xs text-red-500">
+          {{ error }}
+        </p>
+
         <button
-          @click="register()"
-          type="button"
+          type="submit"
           class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Registrer

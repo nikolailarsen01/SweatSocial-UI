@@ -4,15 +4,16 @@ import Register from "~/components/auth/register.vue";
 
 const login = ref<boolean>(true);
 
-const { $sanctumAuth } = useNuxtApp();
 const router = useRouter();
-const errors = ref([]);
 
 useHead(() => {
   return {
     title: login.value ? "Login" : "Registrer",
   };
 });
+if (useCookie("API-Token").value != undefined) {
+  router.push("/profile");
+}
 </script>
 
 <template>
