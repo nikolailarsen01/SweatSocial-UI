@@ -11,7 +11,10 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: ["nuxt-sanctum-auth"],
+  modules: [
+    'nuxt-sanctum-auth',
+    'nuxt-icon'
+  ],
   nuxtSanctumAuth: {
     token: false, // set true to use jwt-token auth instead of cookie. default is false
     baseUrl: "http://localhost:8000",
