@@ -15,6 +15,11 @@ export default defineNuxtConfig({
     'nuxt-sanctum-auth',
     'nuxt-icon'
   ],
+  runtimeConfig: {
+    public: {
+      apiURL: "https://d806-185-19-132-71.ngrok-free.app/api/",
+    },
+  },
   nuxtSanctumAuth: {
     token: false, // set true to use jwt-token auth instead of cookie. default is false
     baseUrl: "http://localhost:8000",
