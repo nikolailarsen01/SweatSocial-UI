@@ -5,11 +5,14 @@ useHead(() => {
     title: "Profil",
   };
 });
-if (useCookie("API-Token").value == undefined) {
-  router.push("/auth");
-}
+
+onMounted(() => {
+  if (!localStorage.getItem("API-Token")) router.push("/auth");
+});
 </script>
 
 <template>
-  <div>Profile page</div>
+  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">Joe</div>
+  </div>
 </template>

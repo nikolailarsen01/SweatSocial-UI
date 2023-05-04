@@ -7,7 +7,6 @@ const form = ref({
   password: "",
 });
 const errorList = ref<string[]>([]);
-
 import { Response } from "~/interfaces/response";
 async function login() {
   await $fetch<Response<void>>(config.public.apiURL + "auth/login", {
@@ -18,21 +17,23 @@ async function login() {
     },
   })
     .then((res) => {
-      const apiToken = useCookie("API-Token", {
-        sameSite: true,
-      });
-      apiToken.value = res.token;
+      localStorage.setItem("API-Token", JSON.stringify(res.token!));
       router.push("/profile");
       return res;
     })
     .catch((error) => {
+      errorList.value = [];
       let output: Response<void> = error.data;
-      Object.entries(output.errors!).forEach(([key, errors]) => {
-        errors.forEach((x) => {
-          errorList.value.push(x);
-          console.log(x);
+      if (output.errors) {
+        Object.entries(output.errors!).forEach(([key, errors]) => {
+          errors.forEach((x) => {
+            errorList.value.push(x);
+            console.log(x);
+          });
         });
-      });
+      } else {
+        errorList.value.push(output.message);
+      }
     });
 }
 </script>

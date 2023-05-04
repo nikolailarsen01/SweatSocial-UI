@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import Login from "~/components/auth/login.vue";
 import Register from "~/components/auth/register.vue";
-
 const login = ref<boolean>(true);
-
 const router = useRouter();
 
 useHead(() => {
@@ -11,9 +9,9 @@ useHead(() => {
     title: login.value ? "Login" : "Registrer",
   };
 });
-if (useCookie("API-Token").value != undefined) {
-  router.push("/profile");
-}
+onMounted(() => {
+  if (localStorage.getItem("API-Token")) router.push("/profile");
+});
 </script>
 
 <template>

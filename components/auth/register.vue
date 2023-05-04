@@ -13,7 +13,6 @@ const form = ref({
 });
 
 const errorList = ref<string[]>([]);
-
 import { Response } from "~/interfaces/response";
 import { Register } from "~/interfaces/register";
 async function register() {
@@ -35,10 +34,7 @@ async function register() {
     },
   })
     .then((res) => {
-      const apiToken = useCookie("API-Token", {
-        sameSite: true,
-      });
-      apiToken.value = res.token;
+      // localStorage.setItem("API-TOKEN", JSON.stringify(res.token!));
       router.push("/profile");
     })
     .catch((error) => {
