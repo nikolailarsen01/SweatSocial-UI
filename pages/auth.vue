@@ -10,7 +10,8 @@ useHead(() => {
   };
 });
 onMounted(() => {
-  if (localStorage.getItem("API-Token")) router.push("/profile");
+  const authStore = useAuthStore();
+  if (authStore.$state.token) router.push("/profile");
 });
 </script>
 

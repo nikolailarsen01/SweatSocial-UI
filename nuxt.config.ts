@@ -11,7 +11,10 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: ["nuxt-icon", "@sidebase/nuxt-session"],
+  modules: ["nuxt-icon", "@pinia/nuxt"],
+  imports: {
+    dirs: ["./stores"],
+  },
   runtimeConfig: {
     public: {
       apiURL: "https://d806-185-19-132-71.ngrok-free.app/api/",

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const config = useRuntimeConfig();
 const emit = defineEmits<{ (event: "login", login: boolean): void }>();
 const router = useRouter();
 const form = ref({
@@ -8,16 +7,22 @@ const form = ref({
 });
 const errorList = ref<string[]>([]);
 import { Response } from "~/interfaces/response";
+import http from "~/middleware/http";
+import { useAuthStore, authState } from "~/stores/auth";
 async function login() {
-  await $fetch<Response<void>>(config.public.apiURL + "auth/login", {
-    method: "post",
-    body: {
+  const authStore = useAuthStore();
+  await http
+    .post<Response<void>>("/auth/login", {
       username: form.value.username,
       password: form.value.password,
-    },
-  })
+    })
     .then((res) => {
-      localStorage.setItem("API-Token", JSON.stringify(res.token!));
+      authStore.signIn({
+        user: null,
+        token: res.data.token!,
+        permissions: [],
+      });
+      localStorage.setItem("API-Token", JSON.stringify(res.data.token!));
       router.push("/profile");
       return res;
     })
