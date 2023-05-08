@@ -7,6 +7,13 @@ module.exports = {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
     },
+    container: {
+      screens: {
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+      }
+    },
   },
   content: [
     "./components/**/*.{js,vue,ts}",

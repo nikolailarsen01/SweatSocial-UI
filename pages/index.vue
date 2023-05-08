@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-let postNew = ref(true)
+let postNew = ref(false)
 </script>
 
 <template>
