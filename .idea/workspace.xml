@@ -20,16 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62f8cd0a-62b8-4884-a688-92efa32e2017" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/pages/centers/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/community/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/SweatSocial_logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/nikolai_wojack.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/error.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/whitewares-billige-køleskabe.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/DefaultHeader.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/DefaultHeader.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/layouts/default.vue" beforeDir="false" afterPath="$PROJECT_DIR$/layouts/default.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nuxt.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/nuxt.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/community/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/community/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +42,9 @@
     <option name="projectConfigVersion" value="2" />
   </component>
   <component name="ProjectId" id="2PV5n5X5yEeztjmlA6sJCCwmK8o" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -69,8 +68,8 @@
       <recent name="C:\Users\Bruger\Documents\GitHub\SweatSocial-UI\pages" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Bruger\Documents\GitHub\SweatSocial-UI\pages" />
       <recent name="C:\Users\Bruger\Documents\GitHub\SweatSocial-UI\public" />
+      <recent name="C:\Users\Bruger\Documents\GitHub\SweatSocial-UI\pages" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -82,7 +81,7 @@
       <option name="presentableId" value="Default" />
       <updated>1683529574259</updated>
       <workItem from="1683529575501" duration="468000" />
-      <workItem from="1683530285747" duration="13252000" />
+      <workItem from="1683530285747" duration="19864000" />
     </task>
     <servers />
   </component>

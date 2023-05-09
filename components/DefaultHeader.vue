@@ -3,9 +3,9 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 
 const navigation = [
-  { name: 'Home', href: '/', current: false },
-  { name: 'Groups', href: '/community', current: false },
-  { name: 'Centers', href: '/centers', current: false },
+  { name: 'Hjem', href: '/', current: false },
+  { name: 'Udforsk', href: '/community', current: false },
+  { name: 'Centre', href: '/centers', current: false },
 ]
 </script>
 
