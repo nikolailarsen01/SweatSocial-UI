@@ -4,16 +4,16 @@ import axios from "axios";
 import { useAuthStore } from "~/stores/auth";
 
 let http = axios.create({
-  baseURL: "https://d806-185-19-132-71.ngrok-free.app/api",
+  baseURL: "https://79e9-185-19-132-71.ngrok-free.app/api",
   withCredentials: true,
 });
 http.interceptors.request.use(
   function (config) {
     const authStore = useAuthStore();
-    console.log(authStore.$state.token);
-    if (authStore.$state.user)
-      config.headers["Authorization"] = `Bearer ${authStore.$state.token}`;
-
+    if (authStore.$state.token) {
+      const text = `Bearer ${authStore.$state.token}`;
+      config.headers.Authorization = text;
+    }
     return config;
   },
   function (err) {

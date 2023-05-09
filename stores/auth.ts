@@ -22,8 +22,8 @@ export const useAuthStore = defineStore("auth", {
     },
     signOut() {
       this.$reset();
-
       //router.replace('/signout')
     },
   },
+  persist: true,
 });

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const emit = defineEmits<{ (event: "login", login: boolean): void }>();
+const emit = defineEmits<{ (event: "page", page: number): void }>();
 const router = useRouter();
 const form = ref({
   username: "",
@@ -8,7 +8,7 @@ const form = ref({
 const errorList = ref<string[]>([]);
 import { Response } from "~/interfaces/response";
 import http from "~/middleware/http";
-import { useAuthStore, authState } from "~/stores/auth";
+import { useAuthStore } from "~/stores/auth";
 async function login() {
   const authStore = useAuthStore();
   await http
@@ -71,6 +71,7 @@ async function login() {
             <a
               href="#"
               class="font-semibold text-indigo-600 hover:text-indigo-500"
+              @click="emit('page', 3)"
               >Glemt dit kodeord?</a
             >
           </div>
@@ -104,7 +105,7 @@ async function login() {
       Ikke medlem?
       <button
         class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-        @click="emit('login', false)"
+        @click="emit('page', 2)"
       >
         Registrer her!
       </button>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
 const router = useRouter();
-const emit = defineEmits<{ (event: "login", login: boolean): void }>();
+const emit = defineEmits<{ (event: "page", page: number): void }>();
 const form = ref({
   username: "",
   firstName: "",
@@ -191,7 +191,7 @@ async function register() {
       Har du en konto?
       <button
         class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-        @click="emit('login', true)"
+        @click="emit('page', 1)"
       >
         Login her!
       </button>

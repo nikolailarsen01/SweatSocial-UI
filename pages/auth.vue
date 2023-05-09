@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import Login from "~/components/auth/login.vue";
 import Register from "~/components/auth/register.vue";
-const login = ref<boolean>(true);
+import Reset from "~/components/auth/reset.vue";
+const page = ref<number>(1);
 const router = useRouter();
 
 useHead(() => {
   return {
-    title: login.value ? "Login" : "Registrer",
+    title:
+      page.value == 1
+        ? "Login"
+        : page.value == 2
+        ? "Registrer"
+        : "Glemt kodeord",
   };
 });
 onMounted(() => {
@@ -26,15 +32,24 @@ onMounted(() => {
       <h2
         class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
       >
-        {{ login ? "Login på din konto" : "Registrer din konto" }}
+        {{
+          page == 1
+            ? "Login på din konto"
+            : page == 2
+            ? "Registrer din konto"
+            : "Glemt kodeord"
+        }}
       </h2>
     </div>
 
-    <div v-if="login">
-      <Login @login="login = $event" />
+    <div v-if="page == 1">
+      <Login @page="page = $event" />
+    </div>
+    <div v-else-if="page == 2">
+      <Register @page="page = $event" />
     </div>
     <div v-else>
-      <Register @login="login = $event" />
+      <Reset @page="page = $event" />
     </div>
   </div>
 </template>
