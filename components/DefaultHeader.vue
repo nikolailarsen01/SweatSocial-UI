@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 
 const navigation = [
   { name: 'Hjem', href: '/', current: false },
-  { name: 'Udforsk', href: '/community', current: false },
+  { name: 'Udforsk', href: '/discover', current: false },
   { name: 'Centre', href: '/centers', current: false },
 ]
 </script>

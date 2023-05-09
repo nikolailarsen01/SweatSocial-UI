@@ -20,12 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62f8cd0a-62b8-4884-a688-92efa32e2017" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/error.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/whitewares-billige-køleskabe.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/challenges/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/events/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/groups/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/mealplans/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/workouts/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/DefaultHeader.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/DefaultHeader.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/layouts/default.vue" beforeDir="false" afterPath="$PROJECT_DIR$/layouts/default.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/community/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/community/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/community/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/discover/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +84,7 @@
       <option name="presentableId" value="Default" />
       <updated>1683529574259</updated>
       <workItem from="1683529575501" duration="468000" />
-      <workItem from="1683530285747" duration="19864000" />
+      <workItem from="1683530285747" duration="27970000" />
     </task>
     <servers />
   </component>

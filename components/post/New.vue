@@ -9,6 +9,7 @@ import '@mayank1513/vue-tag-input/dist/TagInput.css'
 import UploadImages from "vue-upload-drop-images"
 
 const config = useRuntimeConfig()
+const postStore = usePostStore()
 
 const props = defineProps<{ 
   open: boolean
@@ -18,17 +19,11 @@ const emit = defineEmits<{
   (event: 'close'): void
 }>()
 
-const form = ref({
-  visibility: '',
-  groupID: '',
-  post: '',
-  tags: [],
-  images: [],
-  linkable: '',
-  linkableObj: {
-    id: ''
-  }
-})
+const form = ref(postStore.$state)
+
+watch(form, val => {
+  postStore.set(val)
+}, {deep: true, immediate: true})
 
 const handleSubmit = () => {
   let formData = new FormData()
@@ -66,7 +61,6 @@ const handleSubmit = () => {
           </div>
           <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
             <div class="mt-3 text-center sm:mt-0 sm:text-left">
-              {{ form.images }}
               <div class="mb-2 flex">
                 <img class="h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
                 <p class="mb-0 ml-2">
@@ -86,7 +80,9 @@ const handleSubmit = () => {
               </div>
               <hr class="my-2" />
               <UploadImages @changed="(i) => form.images = i" />
-                <div @input="e => form.post = (e.target as HTMLElement).innerText" contenteditable class="w-full border-0 outline-none resize-none mt-2" placeholder="I just ripped a fat one right next to my gym chrush. Yiksies"></div>
+                <div @input="e => form.post = (e.target as HTMLElement).innerText" @load="e => (e.target as HTMLElement).innerText = form.post" contenteditable class="w-full border-0 outline-none resize-none mt-2" placeholder="I just ripped a fat one right next to my gym chrush. Yiksies">
+                  {{ form.post }}
+                </div>
                 <div class="mt-4 mb-2">
                   <label for="tags">Add some tags</label>
                   <tag-input v-model="form.tags" id="tags" />
