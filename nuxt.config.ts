@@ -11,7 +11,7 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: ["nuxt-icon", "@pinia/nuxt"],
+  modules: ["nuxt-icon", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt"],
   imports: {
     dirs: ["./stores"],
   },
