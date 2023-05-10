@@ -40,8 +40,8 @@ const navigation = [
             </DisclosureButton>
 
           <div class="flex h-full place-items-center gap-3 justify-end">
-            <NuxtLink to="/profile"><img class="h-16 w-16 rounded-full" src="nikolai_wojack.png" alt="" /></NuxtLink>
-            <NuxtLink to="/logout"><Icon class="w-16 h-16 bg-blue-700 hover:bg-blue-600 rounded-full p-3 cursor-pointer" name="heroicons:arrow-right-on-rectangle" /></NuxtLink>
+            <NuxtLink to="/profile"><img class="h-16 w-16 rounded-full" src="/nikolai_wojack.png" alt="" /></NuxtLink>
+            <NuxtLink><Icon class="w-16 h-16 bg-blue-700 hover:bg-blue-600 rounded-full p-3 cursor-pointer" name="heroicons:arrow-right-on-rectangle" /></NuxtLink>
           </div>
         </div>
       </div>

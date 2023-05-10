@@ -19,7 +19,7 @@
         </NuxtLink>
         <NuxtLink to="/mealplans" class="flex place-items-center bg-emerald-400 hover:bg-emerald-500 gap-2 py-1 px-4 rounded-xl mb-2 w-full lg:justify-start justify-center">
           <Icon class=" lg:text-5xl md:text-4xl text-3xl" name="material-symbols:fastfood-outline" />
-          <p class="hidden lg:block">Madplanner</p>
+          <p class="hidden lg:block">Madplaner</p>
         </NuxtLink>
         <NuxtLink to="/workouts" class="flex place-items-center bg-orange-400 hover:bg-orange-500 gap-2 py-1 px-4 rounded-xl mb-2 w-full lg:justify-start justify-center">
           <Icon class="lg:text-5xl md:text-4xl text-3xl" name="streamline:travel-hotel-dumbell-sports-weights-dumbbell-sport-fitness" />
@@ -45,7 +45,7 @@
       <!--   Ads   -->
       <div class="lg:col-span-3">
         <div class="p-5 w-80 mt-36 hidden lg:block">
-          <img src="whitewares-billige-køleskabe.png" class="rounded-t">
+          <img src="/whitewares-billige-køleskabe.png" class="rounded-t">
           <button class="bg-stone-500 w-full p-2 rounded-b text-white">KØB NU!!</button>
         </div>
       </div>

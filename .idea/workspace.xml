@@ -20,15 +20,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62f8cd0a-62b8-4884-a688-92efa32e2017" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/pages/challenges/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/events/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/groups/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/mealplans/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/workouts/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Modal.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/challenges/create.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/events/create.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/groups/create.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/DefaultHeader.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/DefaultHeader.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/layouts/default.vue" beforeDir="false" afterPath="$PROJECT_DIR$/layouts/default.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/community/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/discover/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/challenges/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/challenges/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/events/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/events/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/groups/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/groups/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/mealplans/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/mealplans/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workouts/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workouts/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +58,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/pages" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pages/groups" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -68,6 +71,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Bruger\Documents\GitHub\SweatSocial-UI\pages\groups" />
+      <recent name="C:\Users\Bruger\Documents\GitHub\SweatSocial-UI\pages\challenges" />
       <recent name="C:\Users\Bruger\Documents\GitHub\SweatSocial-UI\pages" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -84,7 +89,7 @@
       <option name="presentableId" value="Default" />
       <updated>1683529574259</updated>
       <workItem from="1683529575501" duration="468000" />
-      <workItem from="1683530285747" duration="27970000" />
+      <workItem from="1683530285747" duration="36910000" />
     </task>
     <servers />
   </component>
@@ -112,9 +117,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="567" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1683542810795" />
-    <state x="623" y="225" key="search.everywhere.popup" timestamp="1683543769698">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1683703089865">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1683543769698" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1683703089865" />
   </component>
 </project>
