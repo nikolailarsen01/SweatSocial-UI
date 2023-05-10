@@ -27,20 +27,32 @@ watch(form, val => {
 const handleSubmit = () => {
   let formData = new FormData()
   
+  if(form.value.visibility == 'group')
+    formData.append('group_id', form.value.groupID)
+  else if(form.value.visibility == 'friends')
+    formData.append('friends_only', '1')
+
   formData.append('content', form.value.post)
+  for(var i = 0; i < form.value.tags.length; i++){
+    formData.append('tags[]', form.value.tags[i])
+  }
   for(var i = 0; i < form.value.images.length; i++){
-    let file = form.value.images[i]
-    
-    formData.append('images[]', file)
+    formData.append('images[]', form.value.images[i])
+  }
+
+  if(form.value.linkable){
+    formData.append('linkable_type', form.value.linkable)
+    formData.append('linkable_id', form.value.linkableObj.id)
   }
 
   http.post(`post`, formData).then(res => {
     console.log(res.data)
+
+    postStore.$reset()
+    emit('close')
   }).catch(err => {
-    console.log(err.response.data)
+    console.log(err.response)
   })
-  
-  //emit('close')
 }
 </script>
 
