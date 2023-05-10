@@ -5,6 +5,7 @@ export interface postState {
   groupID: string
   post: string
   tags: any[],
+  hasImages: boolean
   images: any[],
   linkable: string,
   linkableObj: any
@@ -16,6 +17,7 @@ export const usePostStore = defineStore("post", {
     groupID: '',
     post: '',
     tags: [],
+    hasImages: false,
     images: [],
     linkable: '',
     linkableObj: {
