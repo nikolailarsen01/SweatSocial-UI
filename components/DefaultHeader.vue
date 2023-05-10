@@ -8,16 +8,15 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/vue";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 const router = useRouter();
 const navigation = [
   { name: "Hjem", href: "/", current: false },
   { name: "Udforsk", href: "/community", current: false },
   { name: "Centre", href: "/centers", current: false },
 ];
+const authStore = useAuthStore();
 
 function logout() {
-  const authStore = useAuthStore();
   authStore.signOut();
   router.push("/");
 }
@@ -78,13 +77,19 @@ function logout() {
         </DisclosureButton>
 
         <div class="flex h-full place-items-center gap-3 justify-end">
-          <NuxtLink to="/profile"
+          <NuxtLink v-if="!authStore.user" to="/auth">
+            <Icon
+              class="w-16 h-16 bg-blue-700 hover:bg-blue-600 rounded-full p-3 cursor-pointer"
+              name="heroicons:arrow-left-on-rectangle"
+            />
+          </NuxtLink>
+          <NuxtLink v-if="authStore.user" to="/profile"
             ><img
               class="h-16 w-16 rounded-full"
               src="nikolai_wojack.png"
               alt=""
           /></NuxtLink>
-          <a @click="logout()"
+          <a v-if="authStore.user" @click="logout()"
             ><Icon
               class="w-16 h-16 bg-blue-700 hover:bg-blue-600 rounded-full p-3 cursor-pointer"
               name="heroicons:arrow-right-on-rectangle"

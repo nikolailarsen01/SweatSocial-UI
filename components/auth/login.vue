@@ -7,6 +7,7 @@ const form = ref({
 });
 const errorList = ref<string[]>([]);
 import { Response } from "~/interfaces/response";
+import { User } from "~/interfaces/user";
 import http from "~/middleware/http";
 import { useAuthStore } from "~/stores/auth";
 async function login() {
@@ -17,13 +18,20 @@ async function login() {
       password: form.value.password,
     })
     .then((res) => {
-      authStore.signIn({
-        user: null,
-        token: res.data.token!,
-        permissions: [],
-      });
-      localStorage.setItem("API-Token", JSON.stringify(res.data.token!));
-      router.push("/profile");
+      http
+        .get<User>("user", {
+          headers: {
+            Authorization: "Bearer " + res.data.token!,
+          },
+        })
+        .then((user) => {
+          authStore.signIn({
+            user: user.data,
+            token: res.data.token!,
+            permissions: [],
+          });
+          router.push("/profile");
+        });
       return res;
     })
     .catch((error) => {

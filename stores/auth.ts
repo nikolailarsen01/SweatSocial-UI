@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
+import { User } from "~/interfaces/user";
 
 export interface authState {
-  user: any | null;
+  user: User | null;
   token: string | null;
   permissions: string[];
 }

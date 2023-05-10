@@ -1,10 +1,9 @@
 import axios from "axios";
 //import { useToast } from 'vue-toast-notification'
-
 import { useAuthStore } from "~/stores/auth";
 
 let http = axios.create({
-  baseURL: "https://79e9-185-19-132-71.ngrok-free.app/api",
+  baseURL: "http://127.0.0.1:8000/api",
   withCredentials: true,
 });
 http.interceptors.request.use(
