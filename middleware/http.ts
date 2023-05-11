@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useToast } from "vue-toast-notification";
-import { APIError } from "~/interfaces/apiError";
+import { APIError } from "~/types/apiError";
 import { useAuthStore } from "~/stores/auth";
 
 let http = axios.create({
@@ -27,8 +27,6 @@ http.interceptors.request.use(
         });
       else errMsg = err.response.data;
     } else errMsg = err.toString();
-    toast.error("test");
-    toast.error(errMsg);
 
     return Promise.reject(err);
   }
@@ -39,7 +37,6 @@ http.interceptors.response.use(
     return response;
   },
   function (err) {
-    console.dir(err);
     const toast = useToast();
 
     let errorList: string[] = [];
@@ -49,7 +46,6 @@ http.interceptors.response.use(
         Object.entries(res.errors!).forEach(([key, errors]) => {
           errors.forEach((x) => {
             errorList.push(x);
-            console.log(x);
           });
         });
       }

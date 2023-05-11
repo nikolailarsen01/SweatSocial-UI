@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { User } from "~/interfaces/user";
+import { User } from "~/types/user";
 
 export interface authState {
   user: User | null;

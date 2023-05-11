@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const router = useRouter();
-import { User } from "~/interfaces/user";
+import { User } from "~/types/user";
 import http from "~/middleware/http";
 useHead(() => {
   return {

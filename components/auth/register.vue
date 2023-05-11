@@ -11,13 +11,12 @@ const form = ref({
   password: "",
   confirmPassword: "",
 });
-import { Register } from "~/interfaces/register";
-import { useAuthStore } from "~/stores/auth";
-import { useToast } from "vue-toast-notification";
+import { Register } from "~/types/register";
 import http from "~/middleware/http";
-
-const toast = useToast();
+import { useToast } from "vue-toast-notification";
+import { useAuthStore } from "~/stores/auth";
 const authStore = useAuthStore();
+const toast = useToast();
 async function register() {
   if (form.value.password != form.value.confirmPassword) {
     toast.error("Kodeorderne er ikke ens");
