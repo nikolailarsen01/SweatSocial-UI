@@ -13,8 +13,8 @@ const form = ref({
 });
 
 const errorList = ref<string[]>([]);
-import { Response } from "~/interfaces/response";
-import { Register } from "~/interfaces/register";
+import { Response } from "~/types/response";
+import { Register } from "~/types/register";
 async function register() {
   errorList.value = [];
   if (form.value.password != form.value.confirmPassword) {

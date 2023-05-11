@@ -6,8 +6,8 @@ const form = ref({
   password: "",
 });
 const errorList = ref<string[]>([]);
-import { Response } from "~/interfaces/response";
-import { User } from "~/interfaces/user";
+import { Response } from "~/types/response";
+import { User } from "~/types/user";
 import http from "~/middleware/http";
 import { useAuthStore } from "~/stores/auth";
 async function login() {
