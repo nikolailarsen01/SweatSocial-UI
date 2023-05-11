@@ -1,6 +1,12 @@
+<script setup lang="ts">
+defineProps<{ 
+  class?: string
+}>()
+</script>
+
 <template>
-  <div class="modal-overlay bg-black bg-opacity-70">
-    <div class="rounded-xl mb-60 container bg-gray-300 p-5 h-min">
+  <div class="modal-overlay bg-black bg-opacity-70  overflow-hidden">
+    <div class="rounded-xl mb-60 container bg-gray-300 p-5 h-min" :class="class">
       <slot></slot>
     </div>
   </div>
