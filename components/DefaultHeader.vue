@@ -11,7 +11,7 @@ import {
 const router = useRouter();
 const navigation = [
   { name: "Hjem", href: "/", current: false },
-  { name: "Udforsk", href: "/community", current: false },
+  { name: "Udforsk", href: "/discover", current: false },
   { name: "Centre", href: "/centers", current: false },
 ];
 const authStore = useAuthStore();
@@ -86,7 +86,7 @@ function logout() {
           <NuxtLink v-if="authStore.user" to="/profile"
             ><img
               class="h-16 w-16 rounded-full"
-              src="nikolai_wojack.png"
+              src="/nikolai_wojack.png"
               alt=""
           /></NuxtLink>
           <a v-if="authStore.user" @click="logout()"
