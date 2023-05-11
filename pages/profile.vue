@@ -9,6 +9,8 @@ useHead(() => {
 });
 const authStore = useAuthStore();
 const user = ref<User>();
+const edit = ref(false);
+
 if (authStore.user) {
   user.value = authStore.user;
 }
@@ -16,12 +18,32 @@ onMounted(() => {
   const authStore = useAuthStore();
   if (!authStore.$state.token) router.push("/auth");
 });
+function save() {
+  http.put<User>("/user", user.value).then((res) => {
+    authStore.user = res.data;
+    user.value = res.data;
+    edit.value = !edit;
+  });
+}
 </script>
 
 <template>
-  <div>Hej {{ user?.first_name }} {{ user?.last_name }}</div>
   <!-- About Section -->
   <div class="bg-white p-3 shadow-sm rounded-sm">
+    <h1 class="text-gray-900 font-bold text-xl leading-8 my-1 flex flex-row">
+      Hej &nbsp;
+      <div v-if="!edit">{{ user?.username }}</div>
+      <input
+        v-else
+        class="w-full border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+        type="text"
+        id="firstname"
+        name="firstname"
+        placeholder="John"
+        v-model="user!.username"
+        required
+      />
+    </h1>
     <div
       class="flex items-center space-x-2 font-semibold text-gray-900 leading-8"
     >
@@ -47,11 +69,31 @@ onMounted(() => {
       <div class="grid md:grid-cols-2 text-sm">
         <div class="grid grid-cols-2">
           <div class="px-4 py-2 font-semibold">Fornavn</div>
-          <div class="px-4 py-2">{{ user?.first_name }}</div>
+          <div v-if="!edit" class="px-4 py-2">{{ user?.first_name }}</div>
+          <input
+            v-else
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+            type="text"
+            id="firstname"
+            name="firstname"
+            placeholder="John"
+            v-model="user!.first_name"
+            required
+          />
         </div>
         <div class="grid grid-cols-2">
           <div class="px-4 py-2 font-semibold">Efternavn</div>
-          <div class="px-4 py-2">{{ user?.last_name }}</div>
+          <div v-if="!edit" class="px-4 py-2">{{ user?.last_name }}</div>
+          <input
+            v-else
+            class="w-full border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+            type="text"
+            id="firstname"
+            name="firstname"
+            placeholder="John"
+            v-model="user!.last_name"
+            required
+          />
         </div>
         <div class="grid grid-cols-2">
           <div class="px-4 py-2 font-semibold">Gender</div>
@@ -72,18 +114,48 @@ onMounted(() => {
         <div class="grid grid-cols-2">
           <div class="px-4 py-2 font-semibold">Email</div>
           <div class="px-4 py-2">
-            <a class="text-blue-800" href="mailto:jane@example.com">{{
-              user?.email
-            }}</a>
+            <a
+              v-if="!edit"
+              class="text-blue-800"
+              href="mailto:jane@example.com"
+              >{{ user?.email }}</a
+            >
+            <input
+              v-else
+              class="w-full border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+              type="text"
+              id="firstname"
+              name="firstname"
+              placeholder="John"
+              v-model="user!.email"
+              required
+            />
           </div>
         </div>
         <div class="grid grid-cols-2">
           <div class="px-4 py-2 font-semibold">Fødselsdag</div>
-          <div class="px-4 py-2">{{ user?.birthdate }}</div>
+          <div v-if="!edit" class="px-4 py-2">{{ user?.birthdate }}</div>
+          <input
+            v-else
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+            type="date"
+            id="birthdate"
+            name="birthdate"
+            v-model="user!.birthdate"
+          />
         </div>
       </div>
     </div>
     <button
+      v-if="edit"
+      @click="save()"
+      class="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4"
+    >
+      Gem
+    </button>
+    <button
+      v-else
+      @click="edit = !edit"
       class="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4"
     >
       Ændre information

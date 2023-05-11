@@ -11,39 +11,33 @@ const form = ref({
   password: "",
   confirmPassword: "",
 });
-
-const errorList = ref<string[]>([]);
-import { Response } from "~/interfaces/response";
 import { Register } from "~/interfaces/register";
+import { useAuthStore } from "~/stores/auth";
+import { useToast } from "vue-toast-notification";
+import http from "~/middleware/http";
+
+const toast = useToast();
+const authStore = useAuthStore();
 async function register() {
-  errorList.value = [];
   if (form.value.password != form.value.confirmPassword) {
-    errorList.value.push("Kodeorderne er ikke ens");
+    toast.error("Kodeorderne er ikke ens");
     return;
   }
   let birthdate = form.value.rawBirthDate;
-  await $fetch<Response<Register>>(config.public.apiURL + "auth/register", {
-    method: "post",
-    body: {
+  http
+    .post<Register>("/auth/register", {
       username: form.value.username,
       first_name: form.value.firstName,
       last_name: form.value.lastName,
       email: form.value.email,
       birthdate: birthdate,
       password: form.value.password,
-    },
-  })
-    .then((res) => {
-      // localStorage.setItem("API-TOKEN", JSON.stringify(res.token!));
-      router.push("/profile");
     })
-    .catch((error) => {
-      let output: Response<Register> = error.data;
-      Object.entries(output.errors!).forEach(([key, errors]) => {
-        errors.forEach((x) => {
-          errorList.value.push(x);
-          console.log(x);
-        });
+    .then((res) => {
+      authStore.signIn({
+        user: res.data.user,
+        token: res.data.token,
+        permissions: [],
       });
     });
 }
@@ -174,10 +168,6 @@ async function register() {
       </div>
 
       <div>
-        <p v-for="error in errorList" class="mb-1 text-xs text-red-500">
-          {{ error }}
-        </p>
-
         <button
           type="submit"
           class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

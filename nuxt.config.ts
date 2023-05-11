@@ -17,7 +17,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiURL: "https://d806-185-19-132-71.ngrok-free.app/api/",
+      apiURL: "http://127.0.0.1:8000/api",
     },
   },
 });

@@ -1,5 +1,6 @@
 import axios from "axios";
-//import { useToast } from 'vue-toast-notification'
+import { useToast } from "vue-toast-notification";
+import { APIError } from "~/interfaces/apiError";
 import { useAuthStore } from "~/stores/auth";
 
 let http = axios.create({
@@ -16,7 +17,7 @@ http.interceptors.request.use(
     return config;
   },
   function (err) {
-    //  const toast = useToast()
+    const toast = useToast();
 
     let errMsg = "";
     if (err.response) {
@@ -26,8 +27,8 @@ http.interceptors.request.use(
         });
       else errMsg = err.response.data;
     } else errMsg = err.toString();
-
-    //  toast.error(errMsg)
+    toast.error("test");
+    toast.error(errMsg);
 
     return Promise.reject(err);
   }
@@ -38,19 +39,25 @@ http.interceptors.response.use(
     return response;
   },
   function (err) {
-    // const toast = useToast()
+    console.dir(err);
+    const toast = useToast();
 
-    let errMsg = "";
+    let errorList: string[] = [];
     if (err.response) {
-      if (err.response.status === 400)
-        Object.keys(err.response.data).forEach((val) => {
-          errMsg += err.response.data[val] + "<br />";
+      let res: APIError = err.response.data;
+      if (res.errors) {
+        Object.entries(res.errors!).forEach(([key, errors]) => {
+          errors.forEach((x) => {
+            errorList.push(x);
+            console.log(x);
+          });
         });
-      else errMsg = err.response.data;
-    } else errMsg = err.toString();
-
-    // toast.error(errMsg)
-
+      }
+      errorList.push(res.message);
+      errorList.forEach((x) => {
+        toast.error(x);
+      });
+    }
     return Promise.reject(err);
   }
 );

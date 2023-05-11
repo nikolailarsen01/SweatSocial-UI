@@ -5,7 +5,6 @@ const form = ref({
   username: "",
   password: "",
 });
-const errorList = ref<string[]>([]);
 import { Response } from "~/interfaces/response";
 import { User } from "~/interfaces/user";
 import http from "~/middleware/http";
@@ -33,20 +32,6 @@ async function login() {
           router.push("/profile");
         });
       return res;
-    })
-    .catch((error) => {
-      errorList.value = [];
-      let output: Response<void> = error.data;
-      if (output.errors) {
-        Object.entries(output.errors!).forEach(([key, errors]) => {
-          errors.forEach((x) => {
-            errorList.value.push(x);
-            console.log(x);
-          });
-        });
-      } else {
-        errorList.value.push(output.message);
-      }
     });
 }
 </script>
@@ -97,9 +82,6 @@ async function login() {
       </div>
 
       <div>
-        <p v-for="error in errorList" class="mb-1 text-xs text-red-500">
-          {{ error }}
-        </p>
         <button
           type="submit"
           class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
