@@ -19,6 +19,12 @@ const closeModal = () => {
   open.value = false
   document.body.style.overflow = 'unset'
 }
+
+const displayDate: (dateStr: string) => string = (dateStr) => {
+  let date = new Date(dateStr)
+
+  return `${date.getDate()}. ${['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'][date.getMonth()]} ${date.getFullYear()}`
+}
 </script>
 
 <template>
@@ -27,11 +33,17 @@ const closeModal = () => {
       <img class="h-8 w-8 rounded-full" :src="post.user?.avatar || 'gray.png'"/>
       <div class="ml-3 ">
         <span class="text-sm font-semibold antialiased block leading-tight">{{ post.user?.username || '...' }}</span>
-        <span class="text-gray-600 text-xs block">{{ post.date || '...' }}</span>
+        <span class="text-gray-600 text-xs block">{{ displayDate(post.created_at || post.updated_at) }}</span>
       </div>
     </div>
-    <img :src="post.img || 'http://localhost:3000/nikolai_wojack.png'" class="object-cover w-[1000px]" />
-    <p class="m-2">description of this picture</p>
+    <div class="grid grid-cols-2 gap-4" v-if="post.images?.length > 1">
+      <div v-for="i in Math.min(post.images.length, 3)"><img :src="`https://eee2-185-19-132-71.ngrok-free.app/${post.images[i - 1]?.image}`" class="object-cover w-[1000px]" /></div>
+      <div v-if="post.images.length > 3" class="bg-gray-200 justify-center flex">
+        <span class="inline-block align-middle">See more...</span>
+      </div>
+    </div>
+    <img :src="`https://eee2-185-19-132-71.ngrok-free.app/${post.images[0]?.image}`" class="object-cover w-[1000px]" v-else-if="post.images?.length > 0" />
+    <p class="m-2">{{ post.post }}</p>
     <hr />
     <div v-if="post.linkable == 'event'  || post.linkable == 'challenge' || post.linkable == 'group' || post.linkable == 'workout'">
       <div class="flex flex-col relative">
@@ -58,7 +70,7 @@ const closeModal = () => {
         <Icon name="uil:comment" class="text-2xl" @click="openModal" />
       </div>
     </div>
-    <div class="font-semibold text-sm mx-4 mt-2 mb-4">92,371 likes</div>
+    <div class="font-semibold text-sm mx-4 mt-2 mb-4">{{ post.likes }} likes</div>
   </div>
   
   <Modal v-show="open" class="!bg-white !mb-0 max-w-full !h-full !p-0 !rounded-none">
