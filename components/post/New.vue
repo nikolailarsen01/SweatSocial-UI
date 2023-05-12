@@ -57,14 +57,11 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <Dialog class="relative z-10" @close="emit('close')" :open="props.open">
-    <div class="fixed inset-0 z-10 overflow-y-auto">
-      <div class="flex min-h-full items-start justify-center p-4 text-center sm:p-0">
-        <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg" style="max-width:800px">
-          <div class="bg-gray-50 px-4 py-3 sm:px-6">
-            <DialogTitle as="h3" class="text-base font-semibold leading-6 text-gray-900">Create a new post</DialogTitle>
-          </div>
-          <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+  <Modal v-show="props.open" class="!bg-white">
+          <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 relative">
+            <button class="absolute right-2 top-0 p-0 bg-gray-200 rounded-full w-12 h-12 text-xl" @click="emit('close')">
+              <Icon name="humbleicons:times" class="mt-[-3px]" />
+            </button>
             <div class="mt-3 text-center sm:mt-0 sm:text-left">
               <div class="mb-2 flex">
                 <img class="h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
@@ -165,10 +162,7 @@ const handleSubmit = () => {
               <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0" @click="handleSubmit">Post</button>
             </div>
           </div>
-        </DialogPanel>
-      </div>
-    </div>
-  </Dialog>
+        </Modal>
 </template>
 
 <style>
