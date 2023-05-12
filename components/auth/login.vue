@@ -65,6 +65,7 @@ async function login() {
               href="#"
               class="font-semibold text-indigo-600 hover:text-indigo-500"
               @click="emit('page', 3)"
+              tabindex="-1"
               >Glemt dit kodeord?</a
             >
           </div>

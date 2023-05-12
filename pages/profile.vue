@@ -25,25 +25,45 @@ function save() {
     edit.value = !edit;
   });
 }
+let bodyFormData = new FormData();
+function uploadImage() {}
 </script>
 
 <template>
   <!-- About Section -->
   <div class="bg-white p-3 shadow-sm rounded-sm">
-    <h1 class="text-gray-900 font-bold text-xl leading-8 my-1 flex flex-row">
-      Hej &nbsp;
-      <div v-if="!edit">{{ user?.username }}</div>
-      <input
-        v-else
-        class="w-full border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-        type="text"
-        id="firstname"
-        name="firstname"
-        placeholder="John"
-        v-model="user!.username"
-        required
+    <div>
+      <h1 class="text-gray-900 font-bold text-xl leading-8 my-1 flex flex-row">
+        Hej &nbsp;
+        <div v-if="!edit">{{ user?.username }}</div>
+        <input
+          v-else
+          class="w-full border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+          type="text"
+          id="firstname"
+          name="firstname"
+          placeholder="John"
+          v-model="user!.username"
+          required
+        />
+      </h1>
+      <img
+        v-if="!edit"
+        src="~/public/nikolai_wojack.png"
+        alt="profile picture"
+        width="128"
+        height="128"
       />
-    </h1>
+      <form v-else>
+        <input type="file" id="myFile" name="filename" />
+        <button
+          type="submit"
+          class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+        >
+          Upload billede
+        </button>
+      </form>
+    </div>
     <div
       class="flex items-center space-x-2 font-semibold text-gray-900 leading-8"
     >
@@ -100,16 +120,47 @@ function save() {
           <div class="px-4 py-2">Dees nuts</div>
         </div>
         <div class="grid grid-cols-2">
-          <div class="px-4 py-2 font-semibold">Contact No.</div>
-          <div class="px-4 py-2">+11 998001001</div>
+          <div class="px-4 py-2 font-semibold">Biografi</div>
+          <div v-if="!edit" class="px-4 py-2">{{ user?.biography }}</div>
+          <input
+            v-else
+            class="w-full border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+            type="text"
+            id="firstname"
+            name="firstname"
+            placeholder="Jeg er en cool person"
+            v-model="user!.biography"
+            required
+          />
         </div>
         <div class="grid grid-cols-2">
-          <div class="px-4 py-2 font-semibold">Current Address</div>
-          <div class="px-4 py-2">Beech Creek, PA, Pennsylvania</div>
+          <div class="px-4 py-2 font-semibold">Vægt</div>
+          <div v-if="!edit" class="px-4 py-2">{{ user?.weight }}</div>
+          <input
+            v-else
+            class="w-full border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+            type="number"
+            id="firstname"
+            name="firstname"
+            placeholder="0"
+            v-model="user!.weight"
+            required
+          />
         </div>
         <div class="grid grid-cols-2">
-          <div class="px-4 py-2 font-semibold">Permanant Address</div>
-          <div class="px-4 py-2">Arlington Heights, IL, Illinois</div>
+          <div class="px-4 py-2 font-semibold">Højde</div>
+          <div v-if="!edit" class="px-4 py-2">{{ user?.height }}</div>
+          <input
+            v-else
+            class="w-full border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+            type="number"
+            step="any"
+            id="firstname"
+            name="firstname"
+            placeholder="0"
+            v-model="user!.height"
+            required
+          />
         </div>
         <div class="grid grid-cols-2">
           <div class="px-4 py-2 font-semibold">Email</div>
