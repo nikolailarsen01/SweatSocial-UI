@@ -15,6 +15,7 @@ const navigation = [
   { name: "Centre", href: "/centers", current: false },
 ];
 const authStore = useAuthStore();
+const baseUrl = ref(useRuntimeConfig().public.baseUrl);
 
 function logout() {
   authStore.signOut();
@@ -86,7 +87,7 @@ function logout() {
           <NuxtLink v-if="authStore.user" to="/profile"
             ><img
               class="h-16 w-16 rounded-full"
-              src="/nikolai_wojack.png"
+              :src="baseUrl + authStore.user.profile_image_path"
               alt=""
           /></NuxtLink>
           <a v-if="authStore.user" @click="logout()"
