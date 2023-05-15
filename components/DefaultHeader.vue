@@ -11,7 +11,7 @@ import {
 const router = useRouter();
 const navigation = [
   { name: "Hjem", href: "/", current: false },
-  { name: "Udforsk", href: "/discover", current: false },
+  { name: "Venner", href: "/friends", current: false },
   { name: "Centre", href: "/centers", current: false },
 ];
 const authStore = useAuthStore();
@@ -99,7 +99,7 @@ function logout() {
     </div>
 
     <DisclosurePanel
-      class="bg-gradient-to-r from-cyan-400 to-blue-500 border-t md:hidden"
+      class="bg-gradient-to-r from-cyan-400 to-blue-500 border-t md:hidden z-[999] relative"
     >
       <div class="space-y-1 px-2 pb-3 pt-2">
         <div
