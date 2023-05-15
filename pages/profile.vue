@@ -2,6 +2,7 @@
 const router = useRouter();
 import { User } from "~/types/user";
 import http from "~/middleware/http";
+import UploadImages from "vue-upload-drop-images";
 useHead(() => {
   return {
     title: "Profil",
@@ -10,7 +11,7 @@ useHead(() => {
 const authStore = useAuthStore();
 const user = ref<User>();
 const edit = ref(false);
-
+const baseUrl = ref(useRuntimeConfig().public.baseUrl);
 if (authStore.user) {
   user.value = authStore.user;
 }
@@ -25,8 +26,16 @@ function save() {
     edit.value = !edit;
   });
 }
-let bodyFormData = new FormData();
-function uploadImage() {}
+const file = ref<any>();
+function uploadImage() {
+  let formData = new FormData();
+  formData.append("image", file.value[0]);
+  http.post<User>("/user/picture", formData).then((res) => {
+    authStore.user = res.data;
+    user.value = res.data;
+    edit.value = !edit;
+  });
+}
 </script>
 
 <template>
@@ -49,20 +58,20 @@ function uploadImage() {}
       </h1>
       <img
         v-if="!edit"
-        src="~/public/nikolai_wojack.png"
+        :src="baseUrl + authStore.user!.profile_image_path"
         alt="profile picture"
         width="128"
         height="128"
       />
-      <form v-else>
-        <input type="file" id="myFile" name="filename" />
+      <div v-else>
+        <UploadImages :max="1" @changed="(i) => (file = i)" />
         <button
-          type="submit"
+          @click="uploadImage()"
           class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
         >
           Upload billede
         </button>
-      </form>
+      </div>
     </div>
     <div
       class="flex items-center space-x-2 font-semibold text-gray-900 leading-8"
