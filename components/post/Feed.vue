@@ -54,7 +54,7 @@ const displayDate: (dateStr: string) => string = (dateStr) => {
 </script>
 
 <template>
-  <div class="bg-white border rounded-sm max-w-2xl mb-2">
+  <div class="bg-white border rounded-sm max-w-2xl mb-2 mx-auto">
     <div class="flex items-center px-4 py-3">
       <img class="h-8 w-8 rounded-full" :src="post.user?.avatar || 'gray.png'"/>
       <div class="ml-3 ">

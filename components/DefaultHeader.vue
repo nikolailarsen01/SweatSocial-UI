@@ -11,10 +11,11 @@ import {
 const router = useRouter();
 const navigation = [
   { name: "Hjem", href: "/", current: false },
-  { name: "Udforsk", href: "/discover", current: false },
+  { name: "Venner", href: "/friends", current: false },
   { name: "Centre", href: "/centers", current: false },
 ];
 const authStore = useAuthStore();
+const baseUrl = ref(useRuntimeConfig().public.baseUrl);
 
 function logout() {
   authStore.signOut();
@@ -86,7 +87,7 @@ function logout() {
           <NuxtLink v-if="authStore.user" to="/profile"
             ><img
               class="h-16 w-16 rounded-full"
-              src="/nikolai_wojack.png"
+              :src="baseUrl + authStore.user.profile_image_path"
               alt=""
           /></NuxtLink>
           <a v-if="authStore.user" @click="logout()"
@@ -99,7 +100,7 @@ function logout() {
     </div>
 
     <DisclosurePanel
-      class="bg-gradient-to-r from-cyan-400 to-blue-500 border-t md:hidden"
+      class="bg-gradient-to-r from-cyan-400 to-blue-500 border-t md:hidden z-[999] relative"
     >
       <div class="space-y-1 px-2 pb-3 pt-2">
         <div

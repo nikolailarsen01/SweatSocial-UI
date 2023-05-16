@@ -53,7 +53,7 @@
   </div>
 </template>
 <script>
-import Index from "../pages/discover/index";
+import Index from "../pages/friends/index";
 export default {
   components: {Index}
 }
