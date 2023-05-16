@@ -1,14 +1,40 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
-import 'vue3-carousel/dist/carousel.css'
+import http from '~/middleware/http'
+
+import { Splide, SplideSlide } from '@splidejs/vue-splide'
+import '@splidejs/vue-splide/css'
 
 const open = ref(false)
 
-defineProps<{ 
+const props = defineProps<{ 
   post: any,
 }>()
+
+const comments = ref<any[]>(props.post.comments)
+const identifier = ref(0)
+let page = 1
+
+const infiniteHandler = async (state: any) => {
+  let res = await http.get(`post/${props.post.id}/comments${page > 1 ? '?page=' + page : ''}`)
+  comments.value = [...comments.value, ...res.data.data]
+
+  if(res.data.data.length == 0)
+    state.complete()
+  else
+    state.loaded()
+  
+  page++
+}
+
+const handleSubmit = (e: Event) => {
+  let form = new FormData(e.target as HTMLFormElement)
+
+  http.post(`comment`, form).then(res => {
+    console.log(res.data)
+  })
+}
 
 const openModal = () => {
   open.value = true
@@ -77,42 +103,53 @@ const displayDate: (dateStr: string) => string = (dateStr) => {
     
     <div class="flex flex-row h-full">
       <div class="flex basis-3/4 bg-gray-900 align-center">
-        <carousel :items-to-show="1" class="big-view">
-          <slide v-for="slide in 10" :key="slide">
-            <img :src="post.img || 'http://localhost:3000/nikolai_wojack.png'" />
-          </slide>
-          
-          <template #addons>
-            <navigation />
-            <pagination />
-          </template>
-        </carousel>
+        <Splide :options="{ rewind: true }" class="big-view w-full" aria-label="Vue Splide Example">
+          <SplideSlide v-for="slide, i in post.images" :key="i">
+            <img :src="`https://eee2-185-19-132-71.ngrok-free.app/${slide.image}`" class="object-contain" />
+          </SplideSlide>
+          <SplideSlide>
+            <div class="grid grid-cols-1 content-center w-1/2 m-auto h-full">
+              <div class="p-4 bg-sky-500 h-[500px]">
+                {{ post }}
+              </div>
+            </div>
+          </SplideSlide>
+          <SplideSlide v-if="post.linkable != null">
+            <div class="grid grid-cols-1 content-center w-1/2 m-auto h-full">
+              <div class="p-4 bg-sky-500 h-[500px]">
+                {{ post.linkable }}
+              </div>
+            </div>
+          </SplideSlide>
+        </Splide>
       </div>
       <div class="basis-1/4 pt-14">
         <a class="absolute p-1 bg-gray-300 abcursor-pointer rounded-full w-12 h-12 text-center align-middle right-2 top-2 text-2xl" @click="closeModal"><Icon name="humbleicons:times" /></a>
         <div class="mx-2 mb-4 flex flex-col justify-between gap-x-6 py-5">
           <div class="flex gap-x-4">
-            <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="http://localhost:3000/nikolai_wojack.png" alt="">
+            <img class="h-12 w-12 flex-none rounded-full bg-gray-50"  :src="post.user?.avatar || 'gray.png'" alt="">
             <div class="min-w-0 flex-auto">
-              <p class="mt-[-1rem] text-sm font-semibold leading-6 text-gray-900">Yi Long Ma</p>
-              <p class="truncate text-xs leading-5 text-gray-500">@YiLongMa</p>
-              <p class="text-xs leading-5 text-gray-500">Posted <time datetime="2023-01-23T13:23Z">3h ago</time></p>
+              <p class="mt-0 text-sm font-semibold leading-6 text-gray-900">{{ post.user?.username || '...' }}</p>
+              <p class="text-xs leading-5 text-gray-500">{{ displayDate(post.created_at || post.updated_at) }}</p>
             </div>
           </div>
           <div class="mt-2">
-            hi everyone, im Yi Long Ma
+            {{ post.post }}
           </div>
         </div>
         <p class="mx-2 my-0">Comments</p>
-        <textarea class="w-full border-[1px] border-gray-300 p-2 border-solid outline-none" placeholder="Write a comment"></textarea>
+        <form @submit.prevent="handleSubmit">
+          <textarea name="comment" class="w-full border-[1px] border-gray-300 p-2 border-solid outline-none" placeholder="Write a comment"></textarea>
+          <button type="submit">AAA</button>
+        </form>
         <div class="h-full relative overflow-y-scroll">
         <ul role="list" class="divide-y divide-gray-100 p-2  h-full">
-          <li class="flex flex-col justify-between gap-x-6 py-5" v-for="i in 10" :key="i">
+          <p v-if="post.comments.length == 0">No comments :(</p>
+          <li id="comments" class="flex flex-col justify-between gap-x-6 py-5" v-for="comment, i in post.comments" :key="i">
             <div class="flex gap-x-4">
               <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="http://localhost:3000/nikolai_wojack.png" alt="">
               <div class="min-w-0 flex-auto">
-                <p class="mt-[-1rem] text-sm font-semibold leading-6 text-gray-900">Leslie Alexander</p>
-                <p class="truncate text-xs leading-5 text-gray-500">@lisethedise</p>
+                <p class="mt-0 text-sm font-semibold leading-6 text-gray-900">Leslie Alexander</p>
                 <p class="text-xs leading-5 text-gray-500">Posted <time datetime="2023-01-23T13:23Z">3h ago</time></p>
               </div>
             </div>
@@ -120,6 +157,7 @@ const displayDate: (dateStr: string) => string = (dateStr) => {
               I dont like this, you look like a slut
             </div>
           </li>
+          <InfiniteLoading target="#comments" @infinite="infiniteHandler" :identifier="identifier" />
         </ul>
       </div>
       </div>
@@ -129,19 +167,12 @@ const displayDate: (dateStr: string) => string = (dateStr) => {
 </template>
 
 <style>
-.big-view .carousel__viewport {
-  height: 96%;
-}
-.big-view .carousel__track {
+.big-view .splide__track--draggable {
   height: 100%;
 }
-.big-view .carousel__icon {
-  fill: white;
-}
-.big-view .carousel__pagination-button::after{
-  background-color: rgba(255, 255, 255, 0.5);
-}
-.big-view .carousel__pagination-button:hover::after, .carousel__pagination-button--active::after {
-  background-color: white !important;
+.big-view .splide__slide img {
+  display: block;
+  margin: auto auto;
+  height: 100%;
 }
 </style>

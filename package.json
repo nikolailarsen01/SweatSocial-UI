@@ -21,6 +21,7 @@
     "@heroicons/vue": "^2.0.17",
     "@mayank1513/vue-tag-input": "^0.0.4",
     "@pinia/nuxt": "^0.4.9",
+    "@splidejs/vue-splide": "^0.6.12",
     "axios": "^1.4.0",
     "nuxt-icon": "^0.4.0",
     "pinia": "^2.0.0",
