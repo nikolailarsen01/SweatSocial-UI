@@ -14,9 +14,7 @@ const props = defineProps<{
   open: boolean
 }>()
 
-const emit = defineEmits<{ 
-  (event: 'close'): void
-}>()
+const emit = defineEmits(['close','post'])
 
 const form = ref(postStore.$state)
 
@@ -47,6 +45,7 @@ const handleSubmit = () => {
 
   http.post(`post`, formData).then(res => {
     console.log(res.data)
+    emit('post', res.data.data)
 
     postStore.$reset()
     emit('close')

@@ -4,7 +4,7 @@ import { APIError } from "~/types/apiError";
 import { useAuthStore } from "~/stores/auth";
 
 let http = axios.create({
-  baseURL: "https://eee2-185-19-132-71.ngrok-free.app/api",
+  baseURL: "http://127.0.0.1:8000/api",
   withCredentials: true,
 });
 http.interceptors.request.use(

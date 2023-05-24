@@ -6,6 +6,8 @@ import http from '~/middleware/http'
 import { Splide, SplideSlide } from '@splidejs/vue-splide'
 import '@splidejs/vue-splide/css'
 
+const runtimeConfig = useRuntimeConfig()
+
 const open = ref(false)
 
 const props = defineProps<{ 
@@ -31,9 +33,15 @@ const infiniteHandler = async (state: any) => {
 const handleSubmit = (e: Event) => {
   let form = new FormData(e.target as HTMLFormElement)
 
-  http.post(`comment`, form).then(res => {
-    console.log(res.data)
+  form.append('post_id', props.post.id)
+
+  http.post(`post/${props.post.id}/comments`, form).then(res => {
+    comments.value = [res.data.data, ...comments.value]
   })
+}
+
+const handleLike = () => {
+
 }
 
 const openModal = () => {
@@ -63,13 +71,13 @@ const displayDate: (dateStr: string) => string = (dateStr) => {
       </div>
     </div>
     <div class="grid grid-cols-2 gap-4" v-if="post.images?.length > 1">
-      <div v-for="i in Math.min(post.images.length, 3)"><img :src="`https://eee2-185-19-132-71.ngrok-free.app/${post.images[i - 1]?.image}`" class="object-cover w-[1000px]" /></div>
-      <div v-if="post.images.length > 3" class="bg-gray-200 justify-center flex">
+      <div v-for="i in Math.min(post.images.length, 3)"><img  @click="openModal" :src="`${runtimeConfig.public.baseUrl}${post.images[i - 1]?.image}`" class="object-cover w-[1000px]" /></div>
+      <div v-if="post.images.length > 3" class="bg-gray-200 justify-center flex" @click="openModal">
         <span class="inline-block align-middle">See more...</span>
       </div>
     </div>
-    <img :src="`https://eee2-185-19-132-71.ngrok-free.app/${post.images[0]?.image}`" class="object-cover w-[1000px]" v-else-if="post.images?.length > 0" />
-    <p class="m-2">{{ post.post }}</p>
+    <img @click="openModal" :src="`${runtimeConfig.public.baseUrl}${post.images[0]?.image}`" class="object-cover w-[1000px]" v-else-if="post.images?.length > 0" />
+    <p class="m-2" @click="openModal">{{ post.post }}</p>
     <hr />
     <div v-if="post.linkable == 'event'  || post.linkable == 'challenge' || post.linkable == 'group' || post.linkable == 'workout'">
       <div class="flex flex-col relative">
@@ -92,7 +100,7 @@ const displayDate: (dateStr: string) => string = (dateStr) => {
     </div>
     <div class="flex items-center justify-between mx-4 mt-3 mb-2">
       <div class="flex gap-5">
-        <Icon name="ph:thumbs-up" class="text-2xl" />
+        <Icon :name="post.liked ? `ph:thumbs-up-fill` : `ph:thumbs-up`" :class="post.liked ? `text-red-500` : ''" class="text-2xl" @click="handleLike" />
         <Icon name="uil:comment" class="text-2xl" @click="openModal" />
       </div>
     </div>
@@ -105,7 +113,7 @@ const displayDate: (dateStr: string) => string = (dateStr) => {
       <div class="flex basis-3/4 bg-gray-900 align-center">
         <Splide :options="{ rewind: true }" class="big-view w-full" aria-label="Vue Splide Example">
           <SplideSlide v-for="slide, i in post.images" :key="i">
-            <img :src="`https://eee2-185-19-132-71.ngrok-free.app/${slide.image}`" class="object-contain" />
+            <img :src="`${runtimeConfig.public.baseUrl}${slide.image}`" class="object-contain" />
           </SplideSlide>
           <SplideSlide>
             <div class="grid grid-cols-1 content-center w-1/2 m-auto h-full">
@@ -140,21 +148,23 @@ const displayDate: (dateStr: string) => string = (dateStr) => {
         <p class="mx-2 my-0">Comments</p>
         <form @submit.prevent="handleSubmit">
           <textarea name="comment" class="w-full border-[1px] border-gray-300 p-2 border-solid outline-none" placeholder="Write a comment"></textarea>
-          <button type="submit">AAA</button>
+          <div class="mx-2 mb-2">
+          <button type="submit" class="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Submit</button>
+        </div>
         </form>
-        <div class="h-full relative overflow-y-scroll">
+        <div class="h-[621px] relative overflow-y-scroll">
         <ul role="list" class="divide-y divide-gray-100 p-2  h-full">
           <p v-if="post.comments.length == 0">No comments :(</p>
           <li id="comments" class="flex flex-col justify-between gap-x-6 py-5" v-for="comment, i in post.comments" :key="i">
             <div class="flex gap-x-4">
-              <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="http://localhost:3000/nikolai_wojack.png" alt="">
+              <img class="h-12 w-12 flex-none rounded-full bg-gray-50" :src="`https://eee2-185-19-132-71.ngrok-free.app/${comment.username.image}`" alt="">
               <div class="min-w-0 flex-auto">
-                <p class="mt-0 text-sm font-semibold leading-6 text-gray-900">Leslie Alexander</p>
-                <p class="text-xs leading-5 text-gray-500">Posted <time datetime="2023-01-23T13:23Z">3h ago</time></p>
+                <p class="mt-0 text-sm font-semibold leading-6 text-gray-900">{{ comment.username.username }}</p>
+                <p class="text-xs leading-5 text-gray-500">{{ displayDate(comment.created_at || comment.updated_at) }}</p>
               </div>
             </div>
             <div class="mt-2">
-              I dont like this, you look like a slut
+              {{ comment.comment }}
             </div>
           </li>
           <InfiniteLoading target="#comments" @infinite="infiniteHandler" :identifier="identifier" />
